@@ -1,3 +1,6 @@
+<!-- Remove margin collasping -->
+<header style="position: relative; top: -20px;">
+
 {% if cart.items != blank %}
 <h1 class="page-header cart-header" data-empty-text="Your bag is empty">Your bag</h1>
 {% else %}
@@ -13,12 +16,16 @@
 {% endif %}
 
 {% if cart.items != blank %}
+<div class="receipt-png">
+    <img src="https://github.com/BrandonMChambers/PlatinumBaka/blob/master/src/cart/receipt-black.png?raw=true" width="500" class="receipt">
+</div>
+
 <form method="post" action="/cart" id="cart-form" class="cart-form">
     <ul class="cart-items">
         {% for item in cart.items %}
         <li class="cart-item" data-cart-id="{{ item.id }}">
             <div class="item-image-details">
-                <a class="item-image" href="{{ item.product.url }}" title="View {{ item.product.name }}" style="background-image:url('{{ item.product.image | product_image_url | constrain: 576, 576 }}');"></a>
+                <a class="item-image" href="{{ item.product.url }}" title="View {{ item.product.name }}" style="background-image:url('{{ item.product.image | product_image_url | constrain: 576, 576 }}');width:80px;height:95px;position:absolute;bottom:790px;left:145px;"></a>
                 <div class="item-details">
                     <a class="item-product-link" title="View {{ item.product.name }}" href="{{ item.product.url }}">
                         <span class="item-details-name">{{ item.product.name }}</span>
