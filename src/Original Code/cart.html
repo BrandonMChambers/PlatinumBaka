@@ -1,0 +1,56 @@
+{% if cart.items != blank %}
+<h1 class="page-header cart-header" data-empty-text="Your bag is empty">Your bag</h1>
+{% else %}
+<h1 class="page-header cart-header cart-empty-title">Your bag is empty</h1>
+{% endif %}
+
+{% if errors != blank %}
+<ul class="errors">
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if cart.items != blank %}
+<form method="post" action="/cart" id="cart-form" class="cart-form">
+    <ul class="cart-items">
+        {% for item in cart.items %}
+        <li class="cart-item" data-cart-id="{{ item.id }}">
+            <div class="item-image-details">
+                <a class="item-image" href="{{ item.product.url }}" title="View {{ item.product.name }}" style="background-image:url('{{ item.product.image | product_image_url | constrain: 576, 576 }}');"></a>
+                <div class="item-details">
+                    <a class="item-product-link" title="View {{ item.product.name }}" href="{{ item.product.url }}">
+                        <span class="item-details-name">{{ item.product.name }}</span>
+                        {% unless item.product.has_default_option %}
+                        <span class="item-details-option">{{ item.option.name }}</span>
+                        {% endunless %}
+                        <span class="item-details-price">{{ item.unit_price | money: theme.money_format }}</span>
+                    </a>
+                </div>
+            </div>
+            <div class="item-quantity-holder" data-cart-id="{{ item.id }}">
+                <button class="decrease-qty-button qty" type="button" data-func="minus"><svg viewBox="0 0 20 20"><path d="M5 9h10v2H5z"/><path d="M5 9h10v2H5z"/></svg></button>
+                {{ item | item_quantity_input, '', 'quantity' }}
+                <button class="increase-qty-button qty" type="button" data-func="plus"><svg viewBox="0 0 20 20"><path d="M11 5H9v4H5v2h4v4h2v-4h4V9h-4z"/></svg></button>
+            </div>
+            <div class="price">{{ item.unit_price | money: theme.money_format }}</div>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="cart-footer">
+        <div class="cart-totals">
+            <h3>Total  <span>{{ cart.total | money: theme.money_format }}</span></h3>
+            <button type="submit" name="checkout" title="Checkout" class="button checkout-btn">Checkout</button>
+
+        </div>
+    </div>
+</form>
+<div class="cart-empty-message hidden-message">
+    <p><a class="button start-shopping" href="https://www.platinumbaka.com/product/stray-dog-strut-cowboy-beebop-vintage-hoodie">Start shopping</a></p>
+</div>
+{% else %}
+<div class="cart-empty-message">
+    <p><a class="button start-shopping" href="https://www.platinumbaka.com/product/stray-dog-strut-cowboy-beebop-vintage-hoodie">Start shopping</a></p>
+</div>
+{% endif %}
