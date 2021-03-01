@@ -1,0 +1,15 @@
+{% if errors != blank %}
+<ul class="errors">
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<!-- Works: Makes img a button/link to products page -->
+<body>
+<a href="/products" style="display:block; height:100%; width:100%">
+    <img src="https://github.com/thefarlands/platinumbaka/blob/master/Backgrounds/home.gif?raw=true">
+</a>
+</body>
